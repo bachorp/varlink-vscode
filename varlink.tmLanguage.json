@@ -1,0 +1,108 @@
+{
+    "name": "varlink",
+    "scopeName": "source.varlink",
+    "patterns": [
+        { "include": "#comment" },
+        { "include": "#arrow" },
+        { "include": "#enum_or_struct" },
+        { "include": "#interface" },
+        { "include": "#typedef" },
+        { "include": "#method" },
+        { "include": "#error" }
+    ],
+    "repository": {
+        "comment": {
+            "match": "#.*$",
+            "name": "comment.line.number-sign.varlink"
+        },
+        "primitive": {
+            "match": "\\b(bool|int|float|string|object)\\b",
+            "name": "support.type.primitive.varlink"
+        },
+        "typename": {
+            "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "name": "entity.name.type.varlink"
+        },
+        "type": {
+            "patterns": [
+                { "include": "#enum_or_struct" },
+                { "include": "#primitive" },
+                { "include": "#typename" }
+            ]
+        },
+        "enum_first": {
+            "begin": "(?<=\\(|,)\\s*([A-Za-z](_?[A-Za-z0-9])*)(?=,|\\s*\\))",
+            "beginCaptures": { "0": { "name": "string.unquoted.enum-member.varlink" } },
+            "end": "(?=\\))",
+            "name": "meta.enum-members.varlink",
+            "patterns": [
+                { "include": "#comment" },
+                { "include": "#enum_rest" }
+            ]
+        },
+        "enum_rest": {
+            "match": "\\b([A-Za-z](_?[A-Za-z0-9])*)\\b",
+            "name": "string.unquoted.enum-member.varlink"
+        },
+        "struct_key": {
+            "match": "\\b([A-Za-z](_?[A-Za-z0-9])*)\\s*(?=:)",
+            "name": "entity.other.attribute-name.varlink"
+        },
+        "struct_value": {
+            "begin": "(?<=:)\\s*",
+            "end": "(?=,|\\))",
+            "name": "meta.struct-value.varlink",
+            "patterns": [
+                { "include": "#comment" },
+                { "include": "#type" }
+            ]
+        },
+        "enum_or_struct": {
+            "begin": "\\(",
+            "end": "\\)",
+            "name": "meta.enum-or-struct.varlink",
+            "patterns": [
+                { "include": "#comment" },
+                { "include": "#enum_first" },
+                { "include": "#struct_key" },
+                { "include": "#struct_value" }
+            ]
+        },
+        "arrow": {
+            "match": "->",
+            "name": "keyword.control.arrow.varlink"
+        },
+        "typedef": {
+            "begin": "\\b(type)\\b",
+            "beginCaptures": { "0": { "name": "keyword.other.typedef.varlink" } },
+            "end": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "endCaptures": { "0": { "name": "entity.name.type.varlink" } },
+            "name": "meta.typedef.varlink",
+            "patterns": [ { "include": "#comment" } ]
+        },
+        "method": {
+            "begin": "\\b(method)\\b",
+            "beginCaptures": { "0": { "name": "keyword.other.method.varlink" } },
+            "end": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "endCaptures": { "0": { "name": "entity.name.function.varlink" } },
+            "name": "meta.method.varlink",
+            "patterns": [ { "include": "#comment" } ]
+        },
+        "error": {
+            "begin": "\\b(error)\\b",
+            "beginCaptures": { "0": { "name": "keyword.other.error.varlink" } },
+            "end": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "endCaptures": { "0": { "name": "entity.name.type.varlink entity.name.error-type.varlink markup.underline" } },
+            "name": "meta.error-type.varlink",
+            "patterns": [ { "include": "#comment" } ]
+        },
+        "interface": {
+            "begin": "\\b(interface)\\b",
+            "beginCaptures": { "0": { "name": "keyword.control.interface.varlink" } },
+            "end": "\\b[A-Za-z]([A-Za-z0-9-])*(\\.[A-Za-z0-9]([A-Za-z0-9-])*)+\\b",
+            "endCaptures": { "0": { "name": "string.unquoted.interface.varlink" } },
+            "name": "meta.interface.varlink",
+            "patterns": [ { "include": "#comment" } ]
+        }
+    }
+}
