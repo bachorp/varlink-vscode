@@ -1,0 +1,40 @@
+{
+  "name": "varlink",
+  "displayName": "Varlink",
+  "description": "Varlink language support",
+  "version": "0.1.0",
+  "publisher": "bachorp",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "icon": "varlink.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bachorp/varlink-vscode.git"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "varlink",
+        "aliases": [
+          "Varlink",
+          "varlink"
+        ],
+        "extensions": [
+          ".varlink"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "varlink",
+        "scopeName": "source.varlink",
+        "path": "./varlink.tmLanguage.json"
+      }
+    ]
+  }
+}
