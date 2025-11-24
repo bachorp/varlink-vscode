@@ -4,6 +4,7 @@
   "description": "Varlink language support",
   "version": "0.2.0",
   "publisher": "bachorp",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.100.0"
   },
