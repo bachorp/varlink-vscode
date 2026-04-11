@@ -1,0 +1,68 @@
+# asdfasdf
+interface a.d.d-x
+
+method Method (
+    name: string,
+    parameters: [string](type: (bool, int, float, string, object))
+) -> ()
+
+# asdfasdf
+#�d
+#  ��    **afads**
+type Interface (
+ç    name: string,
+≈    typedefs: [string]Typedef,
+🤩   
+    methods: [string]Method,
+    errors: [string]Interface
+)
+
+# asdfasdf
+# type MyType ()
+type MyType (
+    example_bool: bool,
+    example_int: int,
+    example_float: float,
+    example_string: string,
+    example_object: object,
+    example_enum: (one, two, three, one),
+    example_struct: (first: int, second: string),
+    example_array: []string,
+    example_dictionary: [string]string,
+    # adf
+    example_stringset: ????[string](),
+    example_nullable: ?string,
+    # doc
+    example_nullable_array_struct: ?[](
+        first: int,
+        second: string,
+        third: string,
+        forth: [string]MyType
+    ),
+    example_other_type: MyType
+)
+
+error MyError (message: string, code: string, code: int)
+
+# ad
+error EntityNotFound (a: (b))
+
+error MyError (message: string, code: string, code: int)
+
+# error MyError (code: int, message: string)
+method Met (
+    name: string,
+    parameters: [string](
+        type: (            int, int,
+            float,
+            string,
+            object,
+            bool
+        )
+    )
+) -> (
+    b: MyType,
+    a: Interface
+)
+
+error MyError (message: string, code: string, code: int)

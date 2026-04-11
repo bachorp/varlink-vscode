@@ -1,0 +1,15 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": [
+				"${workspaceFolder}/test",
+				"${workspaceFolder}/test/x.varlink",
+				"--extensionDevelopmentPath=${workspaceFolder}",
+			],
+		}
+	]
+}
