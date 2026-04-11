@@ -1,35 +1,32 @@
 {
+    "wordPattern": "[A-Za-z0-9_]+([-._]*[A-Za-z0-9_]+)*",
     "comments": {
         "lineComment": "#",
     },
     "brackets": [
         [
             "[",
-            "]"
+            "]",
         ],
         [
             "(",
-            ")"
+            ")",
         ]
     ],
     "autoClosingPairs": [
-        [
-            "[",
-            "]"
-        ],
-        [
-            "(",
-            ")"
-        ],
+        {
+            "open": "[",
+            "close": "]",
+            "notIn": [
+                "comment",
+            ],
+        },
+        {
+            "open": "(",
+            "close": ")",
+            "notIn": [
+                "comment",
+            ],
+        },
     ],
-    "surroundingPairs": [
-        [
-            "[",
-            "]"
-        ],
-        [
-            "(",
-            ")"
-        ],
-    ]
 }

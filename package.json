@@ -2,11 +2,11 @@
   "name": "varlink",
   "displayName": "Varlink",
   "description": "Varlink language support",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "publisher": "bachorp",
   "license": "MIT",
   "engines": {
-    "vscode": "^1.100.0"
+    "vscode": "^1.105.0"
   },
   "categories": [
     "Programming Languages"
@@ -24,8 +24,15 @@
     "README.md",
     "varlink_mono.png",
     "varlink.png",
-    "varlink.tmLanguage.json"
+    "varlink.tmLanguage.json",
+    "dist/extension.js"
   ],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "vscode:prepublish": "npm run check && npm run build"
+  },
   "contributes": {
     "languages": [
       {
@@ -50,6 +57,68 @@
         "scopeName": "source.varlink",
         "path": "./varlink.tmLanguage.json"
       }
-    ]
+    ],
+    "semanticTokenScopes": [
+      {
+        "language": "varlink",
+        "scopes": {
+          "keyword": [
+            "keyword.other"
+          ],
+          "interface": [
+            "keyword.control"
+          ],
+          "namespace": [
+            "string.unquoted"
+          ],
+          "event": [
+            "string.regexp"
+          ],
+          "decorator": [
+            "keyword.control"
+          ]
+        }
+      }
+    ],
+    "configuration": {
+      "title": "Varlink",
+      "properties": {
+        "varlink.languageServer.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable language server."
+        },
+        "varlink.languageServer.path": {
+          "type": "string",
+          "default": "",
+          "description": "Language server executable. If empty, will try `varlink-language-server`."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "varlink.restartLanguageServer",
+        "title": "Varlink: Restart Language Server"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "varlink.restartLanguageServer",
+          "when": "config.varlink.languageServer.enabled"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9",
+    "which": "^6"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/vscode": "~1.105",
+    "@types/which": "^3",
+    "esbuild": "^0.28",
+    "typescript": "^6"
   }
 }

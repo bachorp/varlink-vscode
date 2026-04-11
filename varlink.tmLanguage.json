@@ -8,7 +8,8 @@
         { "include": "#interface" },
         { "include": "#typedef" },
         { "include": "#method" },
-        { "include": "#error" }
+        { "include": "#error" },
+        { "include": "#primitive" }
     ],
     "repository": {
         "comment": {
@@ -16,11 +17,11 @@
             "name": "comment.line.number-sign.varlink"
         },
         "primitive": {
-            "match": "\\b(bool|int|float|string|object)\\b",
+            "match": "\\b(bool|int|float|string|object|any)\\b",
             "name": "support.type.primitive.varlink"
         },
         "typename": {
-            "match": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "match": "\\b([A-Z][a-zA-Z0-9]*)\\b",
             "name": "entity.name.type.varlink"
         },
         "type": {
@@ -30,42 +31,49 @@
                 { "include": "#typename" }
             ]
         },
-        "enum_first": {
-            "begin": "(?<=\\(|,)\\s*([A-Za-z](_?[A-Za-z0-9])*)(?=,|\\s*\\))",
-            "beginCaptures": { "0": { "name": "string.unquoted.enum-member.varlink" } },
-            "end": "(?=\\))",
-            "name": "meta.enum-members.varlink",
+        "enum_or_struct": {
             "patterns": [
-                { "include": "#comment" },
-                { "include": "#enum_rest" }
+                { "include": "#enum" },
+                { "include": "#struct" }
             ]
         },
-        "enum_rest": {
+        "enum": {
+            "begin": "\\((?=\\s*[A-Za-z](_?[A-Za-z0-9])*\\s*[,)])",
+            "end": "\\)",
+            "beginCaptures": { "0": { "name": "punctuation.enum.begin.varlink" } },
+            "endCaptures": { "0": { "name": "punctuation.enum.end.varlink" } },
+            "name": "meta.enum.varlink",
+            "patterns": [
+                { "include": "#comment" },
+                { "include": "#enum_member" }
+            ]
+        },
+        "enum_member": {
             "match": "\\b([A-Za-z](_?[A-Za-z0-9])*)\\b",
-            "name": "string.unquoted.enum-member.varlink"
+            "name": "variable.other.enummember.varlink"
         },
-        "struct_key": {
-            "match": "\\b([A-Za-z](_?[A-Za-z0-9])*)\\s*(?=:)",
-            "name": "entity.other.attribute-name.varlink"
+        "struct": {
+            "begin": "\\(",
+            "end": "\\)",
+            "beginCaptures": { "0": { "name": "punctuation.struct.begin.varlink" } },
+            "endCaptures": { "0": { "name": "punctuation.struct.end.varlink" } },
+            "name": "meta.struct.varlink",
+            "patterns": [
+                { "include": "#comment" },
+                { "include": "#struct_field" }
+            ]
         },
-        "struct_value": {
-            "begin": "(?<=:)\\s*",
+        "struct_field": {
+            "begin": "\\b([A-Za-z](_?[A-Za-z0-9])*)\\s*(:)",
+            "beginCaptures": {
+                "1": { "name": "entity.other.attribute-name.varlink" },
+                "3": { "name": "punctuation.separator.key-value.varlink" }
+            },
             "end": "(?=,|\\))",
-            "name": "meta.struct-value.varlink",
+            "name": "meta.struct-field.varlink",
             "patterns": [
                 { "include": "#comment" },
                 { "include": "#type" }
-            ]
-        },
-        "enum_or_struct": {
-            "begin": "\\(",
-            "end": "\\)",
-            "name": "meta.enum-or-struct.varlink",
-            "patterns": [
-                { "include": "#comment" },
-                { "include": "#enum_first" },
-                { "include": "#struct_key" },
-                { "include": "#struct_value" }
             ]
         },
         "arrow": {
@@ -75,7 +83,7 @@
         "typedef": {
             "begin": "\\b(type)\\b",
             "beginCaptures": { "0": { "name": "keyword.other.typedef.varlink" } },
-            "end": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "end": "\\b([A-Z][a-zA-Z0-9]*)\\b",
             "endCaptures": { "0": { "name": "entity.name.type.varlink" } },
             "name": "meta.typedef.varlink",
             "patterns": [ { "include": "#comment" } ]
@@ -83,7 +91,7 @@
         "method": {
             "begin": "\\b(method)\\b",
             "beginCaptures": { "0": { "name": "keyword.other.method.varlink" } },
-            "end": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
+            "end": "\\b([A-Z][a-zA-Z0-9]*)\\b",
             "endCaptures": { "0": { "name": "entity.name.function.varlink" } },
             "name": "meta.method.varlink",
             "patterns": [ { "include": "#comment" } ]
@@ -91,15 +99,15 @@
         "error": {
             "begin": "\\b(error)\\b",
             "beginCaptures": { "0": { "name": "keyword.other.error.varlink" } },
-            "end": "\\b([A-Z][a-zA-Z0-9_]*)\\b",
-            "endCaptures": { "0": { "name": "entity.name.type.varlink entity.name.error-type.varlink markup.underline" } },
-            "name": "meta.error-type.varlink",
+            "end": "\\b([A-Z][a-zA-Z0-9]*)\\b",
+            "endCaptures": { "0": { "name": "string.regexp.error.varlink" } },
+            "name": "meta.error.varlink",
             "patterns": [ { "include": "#comment" } ]
         },
         "interface": {
             "begin": "\\b(interface)\\b",
             "beginCaptures": { "0": { "name": "keyword.control.interface.varlink" } },
-            "end": "\\b[A-Za-z]([A-Za-z0-9-])*(\\.[A-Za-z0-9]([A-Za-z0-9-])*)+\\b",
+            "end": "\\b[A-Za-z](-*[A-Za-z0-9])*(\\.[A-Za-z0-9](-*[A-Za-z0-9])*)+\\b",
             "endCaptures": { "0": { "name": "string.unquoted.interface.varlink" } },
             "name": "meta.interface.varlink",
             "patterns": [ { "include": "#comment" } ]

@@ -7,5 +7,15 @@ Varlink language support.
 
 ## Features
 
-- Syntax Highlighting
 - Icon
+- Syntax Highlighting
+- Integration with [`varlink-language-server`](https://github.com/bachorp/varlink-language-server)
+
+## Usage
+
+Installing the language server from source using `git` and `cargo`:
+
+```sh
+git clone https://github.com/bachorp/varlink-language-server.git
+cargo install --path varlink-language-server
+```
