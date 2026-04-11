@@ -3,7 +3,7 @@ import { LanguageClient } from "vscode-languageclient/node";
 import which from "which";
 
 let log!: vscode.LogOutputChannel;
-
+let lsOutput!: vscode.OutputChannel;
 let languageClient: Promise<LanguageClient | undefined> =
   Promise.resolve(undefined);
 
@@ -41,7 +41,10 @@ async function spawnClient(): Promise<LanguageClient | undefined> {
     "varlink-language-server",
     "Varlink Language Server",
     { command: resolved },
-    { documentSelector: [{ language: "varlink" }] },
+    {
+      documentSelector: [{ language: "varlink" }],
+      outputChannel: lsOutput,
+    },
   );
 
   try {
@@ -88,7 +91,8 @@ async function chain(what: "start" | "stop" | "restart") {
 
 export async function activate(context: vscode.ExtensionContext) {
   log = vscode.window.createOutputChannel("Varlink", { log: true });
-  context.subscriptions.push(log);
+  lsOutput = vscode.window.createOutputChannel("Varlink Language Server");
+  context.subscriptions.push(log, lsOutput);
 
   let next = chain("start");
 
