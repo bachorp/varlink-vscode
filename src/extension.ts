@@ -53,8 +53,9 @@ async function spawnClient(): Promise<LanguageClient | undefined> {
     log.info("Language server started");
     return client;
   } catch (err) {
-    log.error(`Cannot start language server: ${err}`);
-    vscode.window.showWarningMessage(`Cannot start language server: ${err}`);
+    let msg = `Failure starting language server: ${err}`;
+    log.error(msg);
+    vscode.window.showWarningMessage(msg);
     return undefined;
   }
 }
@@ -62,27 +63,24 @@ async function spawnClient(): Promise<LanguageClient | undefined> {
 async function chain(what: "start" | "stop" | "restart") {
   let wasRunning = false;
   languageClient = languageClient.then(async (prev) => {
-    if (prev === undefined) {
-      switch (what) {
-        case "start":
-        case "restart":
-          return await spawnClient();
-        case "stop":
-          return undefined;
-      }
-    } else {
+    if (prev !== undefined) {
       wasRunning = true;
-      switch (what) {
-        case "start":
-          return prev;
-        case "restart":
-        case "stop":
-          log.info("Stopping language server");
-          await prev.dispose();
-          log.info("Language server stopped");
-          return what === "restart" ? await spawnClient() : undefined;
+      if (what === "start") {
+        return prev;
+      }
+
+      try {
+        log.info("Stopping language server");
+        await prev.dispose();
+        log.info("Language server stopped");
+      } catch (err) {
+        let msg = `Failure stopping language server: ${err}`;
+        log.error(msg);
+        vscode.window.showWarningMessage(msg);
       }
     }
+
+    return what === "stop" ? undefined : await spawnClient();
   });
 
   let next = await languageClient;
