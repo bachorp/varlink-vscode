@@ -1,3 +1,7 @@
+## `0.3.1`
+
+- Lazily create language client output
+
 ## `0.3.0`
 
 - Add language server client
