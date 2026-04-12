@@ -19,3 +19,5 @@ Installing the language server from source using `git` and `cargo`:
 git clone https://github.com/bachorp/varlink-language-server.git
 cargo install --path varlink-language-server
 ```
+
+The language server binary to be used can be specified in the extension's settings.
