@@ -1,3 +1,7 @@
+## `0.3.2`
+
+- Don't bother `varlink-language-server` with files it can't handle
+
 ## `0.3.1`
 
 - Lazily create language client output

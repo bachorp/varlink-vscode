@@ -44,7 +44,7 @@ async function spawnClient(): Promise<LanguageClient | undefined> {
     "Varlink Language Server",
     { command: resolved },
     {
-      documentSelector: [{ language: "varlink" }],
+      documentSelector: [{ language: "varlink", pattern: "**/*.varlink" }],
       outputChannel: lsOutput,
     },
   );
