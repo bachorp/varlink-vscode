@@ -8,5 +8,6 @@
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
 		"strictNullChecks": true,
+		"types": ["node", "vscode", "which"]
 	}
 }

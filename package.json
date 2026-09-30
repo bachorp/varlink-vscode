@@ -2,7 +2,7 @@
   "name": "varlink",
   "displayName": "Varlink",
   "description": "Varlink language support",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "publisher": "bachorp",
   "license": "MIT",
   "engines": {
@@ -111,14 +111,14 @@
     }
   },
   "dependencies": {
-    "vscode-languageclient": "^9",
-    "which": "^6"
+    "vscode-languageclient": "^10",
+    "which": "^7"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^26",
     "@types/vscode": "~1.105",
     "@types/which": "^3",
     "esbuild": "^0.28",
-    "typescript": "^6"
+    "typescript": "^7"
   }
 }

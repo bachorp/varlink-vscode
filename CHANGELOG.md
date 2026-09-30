@@ -1,3 +1,8 @@
+## `0.3.3`
+
+- Upgrade dependencies.
+- Drop now unnecessary `.varlink` filter introduced in `0.3.2`.
+
 ## `0.3.2`
 
 - Don't bother `varlink-language-server` with files it can't handle
